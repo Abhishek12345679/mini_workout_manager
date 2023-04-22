@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "823385659199",
+    "project_id": "tiny-gym-flutter",
+    "storage_bucket": "tiny-gym-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:823385659199:android:5805f992b92ec6b067e58a",
+        "android_client_info": {
+          "package_name": "com.example.mini_workout_manager"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "823385659199-vg14bpfuqrirme9fuq5ecj6uufbvrhth.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD2GdqG_q0Kvv2EDGpXWjVnQqCTh4cGLt0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "823385659199-vg14bpfuqrirme9fuq5ecj6uufbvrhth.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "823385659199-d6lo5qu7edhrsjl86vslvnh2sjp7hg97.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.miniWorkoutManager"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
