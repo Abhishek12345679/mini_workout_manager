@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:mini_workout_manager/models/workout.dart';
+import 'package:mini_workout_manager/pages/add_new_session_view.dart';
 import 'package:mini_workout_manager/pages/workout_detail.dart';
 
 class HomePage extends StatefulWidget {
@@ -153,8 +154,8 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: (index) {
-          switch (_selectedIndex) {
+        onTap: (int index) {
+          switch (index) {
             case 0:
               if (_selectedIndex == index) {
                 _scrollController.animateTo(
@@ -163,6 +164,12 @@ class _HomePageState extends State<HomePage> {
                   curve: Curves.decelerate,
                 );
               }
+              break;
+            case 1:
+              showDialog(
+                context: context,
+                builder: (context) => const AddNewSessionView(),
+              );
               break;
           }
           setState(() {
