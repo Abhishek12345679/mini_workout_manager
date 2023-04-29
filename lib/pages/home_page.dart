@@ -121,6 +121,15 @@ class _HomePageState extends State<HomePage> {
     ),
   ];
 
+  late ScrollController _scrollController;
+  int _selectedIndex = 0;
+
+  @override
+  void initState() {
+    _scrollController = ScrollController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -128,7 +137,41 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Today'),
         leading: const Icon(Icons.menu),
       ),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add_road_rounded),
+            label: "New",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.manage_accounts),
+            label: "Profile",
+          ),
+        ],
+        currentIndex: _selectedIndex,
+        onTap: (index) {
+          switch (_selectedIndex) {
+            case 0:
+              if (_selectedIndex == index) {
+                _scrollController.animateTo(
+                  0.0,
+                  duration: const Duration(milliseconds: 1000),
+                  curve: Curves.decelerate,
+                );
+              }
+              break;
+          }
+          setState(() {
+            _selectedIndex = index;
+          });
+        },
+      ),
       body: ListView.builder(
+        controller: _scrollController,
         itemCount: workouts.length,
         itemBuilder: (context, index) {
           final currentWorkout = workouts.elementAt(index);
