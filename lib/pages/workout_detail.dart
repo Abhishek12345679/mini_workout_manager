@@ -12,28 +12,30 @@ class WorkoutDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text(workout.name),
       ),
-      body: Column(
-        children: [
-          Image.network(
-            workout.imageUrl,
-            width: double.infinity,
-            height: 500,
-            fit: BoxFit.cover,
-          ),
-          ListTile(
-            title: const Text(
-              'Sets and Reps',
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            Image.network(
+              workout.imageUrl,
+              width: double.infinity,
+              height: 500,
+              fit: BoxFit.cover,
             ),
-            subtitle: Text(
-              "${workout.noOfSets} sets of ${workout.noOfReps} reps",
-              style: const TextStyle(fontSize: 20),
+            ListTile(
+              title: const Text(
+                'Sets and Reps',
+              ),
+              subtitle: Text(
+                "${workout.noOfSets} sets of ${workout.noOfReps} reps",
+                style: const TextStyle(fontSize: 20),
+              ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Text(workout.description),
-          ),
-        ],
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: Text(workout.description),
+            ),
+          ],
+        ),
       ),
     );
   }

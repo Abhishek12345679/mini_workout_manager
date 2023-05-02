@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:mini_workout_manager/constants.dart';
 import 'package:mini_workout_manager/models/exercise.dart';
+import 'package:mini_workout_manager/pages/home_page.dart';
 import 'package:mini_workout_manager/utilities/base_http_client.dart';
 
 class AddNewSessionView extends StatefulWidget {

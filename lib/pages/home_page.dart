@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:mini_workout_manager/models/workout.dart';
 import 'package:mini_workout_manager/pages/add_new_session_view.dart';
-import 'package:mini_workout_manager/pages/workout_detail.dart';
+import 'package:mini_workout_manager/pages/settings_page.dart';
+import 'package:mini_workout_manager/views/workout_session_view.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,16 +11,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final Iterable<Workout> workouts = [];
-
-  late ScrollController _scrollController;
+  static final ScrollController _scrollController = ScrollController();
   int _selectedIndex = 0;
 
-  @override
-  void initState() {
-    _scrollController = ScrollController();
-    super.initState();
-  }
+  static final workoutSessionView = WorkoutSessionView(
+    scrollController: _scrollController,
+  );
+
+  // TODO: use the same widget without duplicating it and losing state as a result
+
+  final List<Widget> _pages = [
+    workoutSessionView,
+    workoutSessionView,
+    const SettingsPage()
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,88 +49,35 @@ class _HomePageState extends State<HomePage> {
           ),
         ],
         currentIndex: _selectedIndex,
-        onTap: (int index) {
-          switch (index) {
-            case 0:
-              if (_selectedIndex == index) {
-                _scrollController.animateTo(
-                  0.0,
-                  duration: const Duration(milliseconds: 1000),
-                  curve: Curves.decelerate,
-                );
-              }
-              break;
-            case 1:
-              showDialog(
-                context: context,
-                builder: (context) => const AddNewSessionView(),
-              );
-              break;
-          }
-          setState(() {
-            _selectedIndex = index;
-          });
-        },
+        onTap: onBottomNavItemTap,
       ),
-      body: Visibility(
-        visible: workouts.isNotEmpty,
-        replacement: const Center(
-          child: Text('Create a new session to see the workouts here'),
-        ),
-        child: ListView.builder(
-          controller: _scrollController,
-          itemCount: workouts.length,
-          itemBuilder: (context, index) {
-            final currentWorkout = workouts.elementAt(index);
-
-            return Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(12),
-                  // boxShadow: [BoxShadow(color: Colors.grey.shade800)],
-                ),
-                child: Row(
-                  children: [
-                    Padding(
-                      padding: const EdgeInsets.all(5.0),
-                      child: ClipRRect(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(8.0),
-                        ),
-                        child: Image.network(
-                          currentWorkout.imageUrl,
-                          width: 80,
-                          height: 80,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: ListTile(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => WorkoutDetail(
-                                workout: currentWorkout,
-                              ),
-                            ),
-                          );
-                        },
-                        title: Text(currentWorkout.name),
-                        subtitle: Text(
-                          "${currentWorkout.noOfSets} sets of ${currentWorkout.noOfReps} reps",
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            );
-          },
-        ),
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _pages,
       ),
     );
+  }
+
+  void onBottomNavItemTap(int index) {
+    switch (index) {
+      case 0:
+        if (_selectedIndex == index) {
+          _scrollController.animateTo(
+            0.0,
+            duration: const Duration(milliseconds: 1000),
+            curve: Curves.decelerate,
+          );
+        }
+        break;
+      case 1:
+        showDialog(
+          context: context,
+          builder: (context) => const AddNewSessionView(),
+        );
+        break;
+    }
+    setState(() {
+      _selectedIndex = index;
+    });
   }
 }
