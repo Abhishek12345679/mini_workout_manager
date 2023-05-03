@@ -76,8 +76,24 @@ class _AddNewSessionViewState extends State<AddNewSessionView> {
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.max,
             children: [
+              const Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text(
+                  'Selected Workouts',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              SizedBox(
+                height: 200,
+                child: ListView.builder(
+                  itemBuilder: (context, index) {
+                    return ListTile();
+                  },
+                ),
+              ),
               TextField(
                 autocorrect: false,
                 controller: _searchController,
