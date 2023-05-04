@@ -36,7 +36,7 @@ class _HomePageState extends State<HomePage> {
       ),
       appBar: AppBar(
         title: Text(_pageTitles.elementAt(_selectedIndex)),
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
