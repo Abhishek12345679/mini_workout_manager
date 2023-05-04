@@ -1,10 +1,8 @@
 import 'dart:convert';
-import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:mini_workout_manager/constants.dart';
 import 'package:mini_workout_manager/models/exercise.dart';
-import 'package:mini_workout_manager/pages/home_page.dart';
 import 'package:mini_workout_manager/utilities/base_http_client.dart';
 
 class AddNewSessionView extends StatefulWidget {
@@ -17,6 +15,7 @@ class AddNewSessionView extends StatefulWidget {
 class _AddNewSessionViewState extends State<AddNewSessionView> {
   late final TextEditingController _searchController;
   List<Exercise> _excercises = [];
+  List<Exercise> _selectedExercises = [];
   bool isLoading = false;
 
   @override
@@ -88,10 +87,26 @@ class _AddNewSessionViewState extends State<AddNewSessionView> {
               ),
               SizedBox(
                 height: 200,
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return ListTile();
-                  },
+                child: Visibility(
+                  visible: _selectedExercises.isNotEmpty,
+                  child: ListView.builder(
+                    itemCount: _selectedExercises.length,
+                    itemBuilder: (context, index) {
+                      final currentExercise =
+                          _selectedExercises.elementAt(index);
+
+                      return ListTile(
+                        leading: Image.network(
+                          currentExercise.gifUrl,
+                        ),
+                        title: Text(currentExercise.name),
+                        minVerticalPadding: 12,
+                        subtitle: Text(
+                            '${currentExercise.target} | ${currentExercise.bodyPart} | ${currentExercise.equipment}'),
+                        onTap: () {},
+                      );
+                    },
+                  ),
                 ),
               ),
               TextField(
@@ -140,6 +155,11 @@ class _AddNewSessionViewState extends State<AddNewSessionView> {
                               minVerticalPadding: 12,
                               subtitle: Text(
                                   '${currentExercise.target} | ${currentExercise.bodyPart} | ${currentExercise.equipment}'),
+                              onTap: () {
+                                setState(() {
+                                  _selectedExercises.add(currentExercise);
+                                });
+                              },
                             ),
                           ),
                         );
