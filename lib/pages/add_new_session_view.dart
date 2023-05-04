@@ -15,7 +15,7 @@ class AddNewSessionView extends StatefulWidget {
 class _AddNewSessionViewState extends State<AddNewSessionView> {
   late final TextEditingController _searchController;
   List<Exercise> _excercises = [];
-  List<Exercise> _selectedExercises = [];
+  Set<Exercise> _selectedExercises = {};
   bool isLoading = false;
 
   @override
