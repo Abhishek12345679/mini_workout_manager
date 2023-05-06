@@ -10,7 +10,7 @@ class SettingsPage extends StatelessWidget {
       itemCount: 1,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text('Licenses'),
+          title: const Text('Licenses'),
           onTap: () {
             showLicensePage(context: context);
           },
