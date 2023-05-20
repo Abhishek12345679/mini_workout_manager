@@ -26,14 +26,11 @@ class _HomePageState extends State<HomePage> {
     const SettingsPage()
   ];
 
-  final List<String> _pageTitles = ['Today', 'Today', 'Settings'];
+  final List<String> _pageTitles = ['weeerk', 'Home', 'Settings'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const Drawer(
-        child: Text('Hello'),
-      ),
       appBar: AppBar(
         title: Text(_pageTitles.elementAt(_selectedIndex)),
         // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),

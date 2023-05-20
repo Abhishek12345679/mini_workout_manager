@@ -14,55 +14,85 @@ class _WorkoutSessionViewState extends State<WorkoutSessionView> {
 
   @override
   Widget build(BuildContext context) {
-    return Visibility(
-      visible: workouts.isNotEmpty,
-      replacement: const Center(
-        child: Text('Create a new session to see the workouts here'),
-      ),
-      child: ListView.builder(
-        controller: widget.scrollController,
-        itemCount: workouts.length,
-        itemBuilder: (context, index) {
-          final currentWorkout = workouts.elementAt(index);
-
-          return Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        appBar: AppBar(
+          toolbarHeight: 0,
+          bottom: const TabBar(
+            tabs: [
+              Tab(
+                text: 'Today',
               ),
-              child: Row(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(5.0),
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(8.0),
+              Tab(
+                text: 'This Week',
+              ),
+              Tab(
+                text: 'This Month',
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            Visibility(
+              visible: workouts.isNotEmpty,
+              replacement: const Center(
+                child: Text('Create a new session to see the workouts here'),
+              ),
+              child: ListView.builder(
+                controller: widget.scrollController,
+                itemCount: workouts.length,
+                itemBuilder: (context, index) {
+                  final currentWorkout = workouts.elementAt(index);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(12),
                       ),
-                      child: Image.network(
-                        currentWorkout.imageUrl,
-                        width: 80,
-                        height: 80,
-                        fit: BoxFit.cover,
+                      child: Row(
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: ClipRRect(
+                              borderRadius: const BorderRadius.all(
+                                Radius.circular(8.0),
+                              ),
+                              child: Image.network(
+                                currentWorkout.imageUrl,
+                                width: 80,
+                                height: 80,
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: ListTile(
+                              onTap: () {
+                                Navigator.pop(context);
+                              },
+                              title: Text(currentWorkout.name),
+                              subtitle: Text(
+                                "${currentWorkout.noOfSets} sets of ${currentWorkout.noOfReps} reps",
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  Expanded(
-                    child: ListTile(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      title: Text(currentWorkout.name),
-                      subtitle: Text(
-                        "${currentWorkout.noOfSets} sets of ${currentWorkout.noOfReps} reps",
-                      ),
-                    ),
-                  ),
-                ],
+                  );
+                },
               ),
             ),
-          );
-        },
+            Container(
+              color: Colors.red,
+            ),
+            Container(
+              color: Colors.green,
+            ),
+          ],
+        ),
       ),
     );
   }
