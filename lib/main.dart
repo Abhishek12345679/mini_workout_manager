@@ -12,7 +12,9 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      theme: ThemeData.dark(useMaterial3: true),
+      theme: ThemeData.dark(
+        useMaterial3: false,
+      ), //material3 has issues with tabbarview
       title: 'MiniWork',
       home: const HomePage(),
     );

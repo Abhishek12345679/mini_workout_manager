@@ -11,19 +11,12 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  static final ScrollController _scrollController = ScrollController();
   int _selectedIndex = 0;
 
-  static final workoutSessionView = WorkoutSessionView(
-    scrollController: _scrollController,
-  );
-
-  // TODO: use the same widget without duplicating it and losing state as a result
-
-  final List<Widget> _pages = [
-    workoutSessionView,
-    workoutSessionView,
-    const SettingsPage()
+  final List<Widget> _pages = const [
+    WorkoutSessionView(),
+    WorkoutSessionView(),
+    SettingsPage()
   ];
 
   final List<String> _pageTitles = ['weeerk', 'Home', 'Settings'];
@@ -33,7 +26,6 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_pageTitles.elementAt(_selectedIndex)),
-        // leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: const [
@@ -62,15 +54,6 @@ class _HomePageState extends State<HomePage> {
 
   void onBottomNavItemTap(int index) {
     switch (index) {
-      case 0:
-        if (_selectedIndex == index) {
-          _scrollController.animateTo(
-            0.0,
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.decelerate,
-          );
-        }
-        break;
       case 1:
         showDialog(
           context: context,

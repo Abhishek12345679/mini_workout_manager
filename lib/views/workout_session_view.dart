@@ -1,96 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:mini_workout_manager/models/workout.dart';
 
 class WorkoutSessionView extends StatefulWidget {
-  const WorkoutSessionView({super.key, required this.scrollController});
-  final ScrollController scrollController;
+  const WorkoutSessionView({super.key});
 
   @override
   State<WorkoutSessionView> createState() => _WorkoutSessionViewState();
 }
 
-class _WorkoutSessionViewState extends State<WorkoutSessionView> {
-  final Iterable<Workout> workouts = [];
+class _WorkoutSessionViewState extends State<WorkoutSessionView>
+    with TickerProviderStateMixin {
+  late final TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: 3, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 3,
-      child: Scaffold(
-        appBar: AppBar(
-          toolbarHeight: 0,
-          bottom: const TabBar(
-            tabs: [
-              Tab(
-                text: 'Today',
-              ),
-              Tab(
-                text: 'This Week',
-              ),
-              Tab(
-                text: 'This Month',
-              ),
-            ],
-          ),
+    return Scaffold(
+      appBar: AppBar(
+        bottom: TabBar(
+          controller: _tabController,
+          tabs: const [
+            Tab(text: 'Today'),
+            Tab(text: 'This Week'),
+            Tab(text: 'This Month'),
+          ],
         ),
-        body: TabBarView(
+      ),
+      body: SafeArea(
+        child: TabBarView(
+          controller: _tabController,
           children: [
-            Visibility(
-              visible: workouts.isNotEmpty,
-              replacement: const Center(
-                child: Text('Create a new session to see the workouts here'),
-              ),
-              child: ListView.builder(
-                controller: widget.scrollController,
-                itemCount: workouts.length,
-                itemBuilder: (context, index) {
-                  final currentWorkout = workouts.elementAt(index);
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(5.0),
-                            child: ClipRRect(
-                              borderRadius: const BorderRadius.all(
-                                Radius.circular(8.0),
-                              ),
-                              child: Image.network(
-                                currentWorkout.imageUrl,
-                                width: 80,
-                                height: 80,
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                          ),
-                          Expanded(
-                            child: ListTile(
-                              onTap: () {
-                                Navigator.pop(context);
-                              },
-                              title: Text(currentWorkout.name),
-                              subtitle: Text(
-                                "${currentWorkout.noOfSets} sets of ${currentWorkout.noOfReps} reps",
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-            Container(
-              color: Colors.red,
-            ),
-            Container(
-              color: Colors.green,
-            ),
+            Container(color: Colors.red),
+            Container(color: Colors.green),
+            GridView.builder(
+              itemCount: 31,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 7, mainAxisExtent: 100),
+              itemBuilder: (context, index) {
+                return Text((index + 1).toString());
+              },
+            )
           ],
         ),
       ),
